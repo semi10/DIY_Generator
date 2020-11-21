@@ -90,6 +90,8 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
+  Joystick joystick;
+
   ssd1306_Init();
 
   ssd1306_Fill(Black);
@@ -111,6 +113,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  joystick.poll();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

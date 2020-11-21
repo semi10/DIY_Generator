@@ -62,19 +62,14 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define JoystickLeft_Pin GPIO_PIN_11
 #define JoystickLeft_GPIO_Port GPIOB
-#define JoystickLeft_EXTI_IRQn EXTI15_10_IRQn
 #define JoystickRight_Pin GPIO_PIN_12
 #define JoystickRight_GPIO_Port GPIOB
-#define JoystickRight_EXTI_IRQn EXTI15_10_IRQn
 #define JoystickDown_Pin GPIO_PIN_13
 #define JoystickDown_GPIO_Port GPIOB
-#define JoystickDown_EXTI_IRQn EXTI15_10_IRQn
 #define JoystickUp_Pin GPIO_PIN_14
 #define JoystickUp_GPIO_Port GPIOB
-#define JoystickUp_EXTI_IRQn EXTI15_10_IRQn
 #define JoystickSelect_Pin GPIO_PIN_15
 #define JoystickSelect_GPIO_Port GPIOB
-#define JoystickSelect_EXTI_IRQn EXTI15_10_IRQn
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
