@@ -32,7 +32,9 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdio.h"
+#include "ssd1306.h"
+#include "ssd1306_tests.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -50,8 +52,6 @@ extern "C" {
 
 /* USER CODE END EM */
 
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
-
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -60,6 +60,21 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define JoystickLeft_Pin GPIO_PIN_11
+#define JoystickLeft_GPIO_Port GPIOB
+#define JoystickLeft_EXTI_IRQn EXTI15_10_IRQn
+#define JoystickRight_Pin GPIO_PIN_12
+#define JoystickRight_GPIO_Port GPIOB
+#define JoystickRight_EXTI_IRQn EXTI15_10_IRQn
+#define JoystickDown_Pin GPIO_PIN_13
+#define JoystickDown_GPIO_Port GPIOB
+#define JoystickDown_EXTI_IRQn EXTI15_10_IRQn
+#define JoystickUp_Pin GPIO_PIN_14
+#define JoystickUp_GPIO_Port GPIOB
+#define JoystickUp_EXTI_IRQn EXTI15_10_IRQn
+#define JoystickSelect_Pin GPIO_PIN_15
+#define JoystickSelect_GPIO_Port GPIOB
+#define JoystickSelect_EXTI_IRQn EXTI15_10_IRQn
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
