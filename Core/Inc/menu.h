@@ -17,11 +17,13 @@ extern "C" {
 
 class Menu {
 public:
-	Menu(MenuItem *menuItem);
+	Menu(MenuItem *menuItem, uint8_t itemCount);
 	void drawMenu();
 	virtual ~Menu();
 private:
 	MenuItem *menuItem;
+	uint8_t itemCount;
+	uint8_t activeItem = 0;
 
 };
 

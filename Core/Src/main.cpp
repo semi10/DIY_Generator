@@ -96,8 +96,13 @@ int main(void)
 
   Joystick joystick;
 
-  MenuItem firstMenuItem("First Menu", 2, 0);
-  Menu mainMenu(&firstMenuItem);
+  MenuItem menuItem[] = {
+		  MenuItem("1: 10Hz 95%", 2, 0 ),
+		  MenuItem("2: 5Hz 5%", 2, 18),
+		  MenuItem("3: 8Hz 35%", 2, 36)
+  };
+
+  Menu mainMenu(menuItem, sizeof(menuItem)/sizeof(MenuItem));
   mainMenu.drawMenu();
 
   /* USER CODE END 2 */
