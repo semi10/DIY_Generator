@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "joystick.h"
+#include "menu.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,23 +91,15 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
+  ssd1306_Init();
+  ssd1306_Fill(Black);
+
   Joystick joystick;
 
-  ssd1306_Init();
+  MenuItem firstMenuItem("First Menu", 2, 0);
+  Menu mainMenu(&firstMenuItem);
+  mainMenu.drawMenu();
 
-  ssd1306_Fill(Black);
-  ssd1306_SetCursor(2, 0);
-  ssd1306_WriteString("Font 11x18", Font_11x18, White);
-
-  ssd1306_SetCursor(2, 18);
-  ssd1306_WriteString("Font 11x18", Font_11x18, White);
-
-  ssd1306_SetCursor(2, 36);
-  ssd1306_WriteString("Font 11x18", Font_11x18, White);
-
-  ssd1306_UpdateScreen();
-
-  printf("Draw\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
