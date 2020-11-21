@@ -26,6 +26,22 @@ void Menu::drawMenu()
 	ssd1306_UpdateScreen();
 }
 
+void Menu::down()
+{
+	activeItem = (activeItem + 1) % itemCount;
+
+	drawMenu();
+}
+
+
+void Menu::up()
+{
+	activeItem = (activeItem > 0) ? --activeItem : (itemCount - 1);
+
+	drawMenu();
+}
+
+
 Menu::~Menu() {
 	// TODO Auto-generated destructor stub
 }

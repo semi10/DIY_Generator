@@ -15,8 +15,8 @@ extern "C"
 
 enum joystickButton { BT_LEFT, BT_RIGHT, BT_DOWN, BT_UP, BT_SELECT };
 
-Joystick::Joystick() {
-	// TODO Auto-generated constructor stub
+Joystick::Joystick(Menu *activeMenu) {
+	this->activeMenu = activeMenu;
 }
 
 void Joystick::poll()
@@ -34,10 +34,10 @@ void Joystick::poll()
 				printf("Right\n");
 				break;
 			case BT_DOWN:
-				printf("Down\n");
+				activeMenu->down();
 				break;
 			case BT_UP:
-				printf("Up\n");
+				activeMenu->up();
 				break;
 			case BT_SELECT:
 				printf("Select\n");

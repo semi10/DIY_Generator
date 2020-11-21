@@ -46,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+Menu *activeMenu;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -94,17 +94,20 @@ int main(void)
   ssd1306_Init();
   ssd1306_Fill(Black);
 
-  Joystick joystick;
 
   MenuItem menuItem[] = {
-		  MenuItem("1: 10Hz 95%", 2, 0 ),
+		  MenuItem("1: 10Hz 95%", 2, 0),
 		  MenuItem("2: 5Hz 5%", 2, 18),
 		  MenuItem("3: 8Hz 35%", 2, 36)
   };
 
   Menu mainMenu(menuItem, sizeof(menuItem)/sizeof(MenuItem));
-  mainMenu.drawMenu();
+  activeMenu = &mainMenu;
 
+
+  activeMenu->drawMenu();
+
+  Joystick joystick(activeMenu);
   /* USER CODE END 2 */
 
   /* Infinite loop */

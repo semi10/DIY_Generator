@@ -10,16 +10,18 @@
 
 #include "stdint.h"
 #include "button.h"
+#include "menu.h"
 
 #define JOYSTICK_BUTTONS_NUM 5
 
 class Joystick {
 public:
-	Joystick();
+	Joystick(Menu *activeMenu);
 	void poll();
 	virtual ~Joystick();
 
 private:
+	Menu *activeMenu;
 	Button button[JOYSTICK_BUTTONS_NUM] = {
 			Button(JoystickLeft_GPIO_Port, JoystickLeft_Pin),
 			Button(JoystickRight_GPIO_Port, JoystickRight_Pin),

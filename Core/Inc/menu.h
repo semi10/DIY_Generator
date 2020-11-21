@@ -20,6 +20,9 @@ public:
 	Menu(MenuItem *menuItem, uint8_t itemCount);
 	void drawMenu();
 	virtual ~Menu();
+	void down();
+	void up();
+
 private:
 	MenuItem *menuItem;
 	uint8_t itemCount;
