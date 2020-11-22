@@ -7,10 +7,21 @@
 
 #include "menuItem.h"
 
+extern "C"
+{
+#include "stdio.h"
+}
+
+
 MenuItem::MenuItem(char* str, uint8_t x,  uint8_t y) {
 	this->str = str;
 	this->x = x;
 	this->y = y;
+}
+
+void MenuItem::select()
+{
+	printf("Select\n");
 }
 
 MenuItem::~MenuItem() {

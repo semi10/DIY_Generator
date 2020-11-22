@@ -8,14 +8,20 @@
 #ifndef MENUITEM_H_
 #define MENUITEM_H_
 
-#include "stdint.h"
+extern "C"
+{
+#include "stdio.h"
+}
 
+class Menu;
 
 class MenuItem {
 public:
 	MenuItem(char* str, uint8_t x,  uint8_t y);
 	char* str;
 	uint8_t x , y;
+	virtual void select();
+	Menu *parentMenu;
 	virtual ~MenuItem();
 private:
 

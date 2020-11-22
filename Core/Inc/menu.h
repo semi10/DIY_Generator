@@ -9,6 +9,7 @@
 #define MENU_H_
 
 #include "menuItem.h"
+#include "timerMenuItem.h"
 
 extern "C" {
 #include "ssd1306.h"
@@ -22,6 +23,7 @@ public:
 	virtual ~Menu();
 	void down();
 	void up();
+	void select();
 
 private:
 	MenuItem *menuItem;

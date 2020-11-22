@@ -8,9 +8,13 @@
 #include "menu.h"
 
 Menu::Menu(MenuItem *menuItem, uint8_t itemCount) {
-	// TODO Auto-generated constructor stub
 	this->menuItem = menuItem;
 	this->itemCount = itemCount;
+
+	for (int i = 0; i < itemCount; i++)
+	{
+		menuItem->parentMenu = this;
+	}
 }
 
 void Menu::drawMenu()
@@ -41,6 +45,10 @@ void Menu::up()
 	drawMenu();
 }
 
+void Menu::select()
+{
+	menuItem[activeItem].select();
+}
 
 Menu::~Menu() {
 	// TODO Auto-generated destructor stub

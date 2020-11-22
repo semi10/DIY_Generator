@@ -40,7 +40,7 @@ void Joystick::poll()
 				activeMenu->up();
 				break;
 			case BT_SELECT:
-				printf("Select\n");
+				activeMenu->select();
 				break;
 			default:
 				printf("Unknown button\n");

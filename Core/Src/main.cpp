@@ -96,9 +96,9 @@ int main(void)
 
 
   MenuItem menuItem[] = {
-		  MenuItem("1: 10Hz 95%", 2, 0),
-		  MenuItem("2: 5Hz 5%", 2, 18),
-		  MenuItem("3: 8Hz 35%", 2, 36)
+		  MenuItem("1: 10Hz 95%", 2, 0 ),
+		  MenuItem("2: 5Hz 5%"  , 2, 18),
+		  TimerMenuItem("3: 8Hz 35%" , 2, 36)
   };
 
   Menu mainMenu(menuItem, sizeof(menuItem)/sizeof(MenuItem));
