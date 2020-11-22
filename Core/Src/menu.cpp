@@ -7,15 +7,18 @@
 
 #include "menu.h"
 
-Menu::Menu(MenuItem *menuItem, uint8_t itemCount) {
-	this->menuItem = menuItem;
-	this->itemCount = itemCount;
+Menu::Menu()
+{
 
-	for (int i = 0; i < itemCount; i++)
-	{
-		menuItem->parentMenu = this;
-	}
 }
+
+
+void Menu::addMenuItem(MenuItem *newMenuItem)
+{
+	menuItem[itemCount] = newMenuItem;
+	itemCount++;
+}
+
 
 void Menu::drawMenu()
 {
@@ -23,8 +26,8 @@ void Menu::drawMenu()
 	{
 	  SSD1306_COLOR itemColor = (i == activeItem) ? Black : White;
 
-	  ssd1306_SetCursor(menuItem[i].x, menuItem[i].y);
-	  ssd1306_WriteString(menuItem[i].str, Font_11x18, itemColor);
+	  ssd1306_SetCursor(menuItem[i]->x, menuItem[i]->y);
+	  ssd1306_WriteString(menuItem[i]->str, Font_11x18, itemColor);
 	}
 
 	ssd1306_UpdateScreen();
@@ -47,7 +50,7 @@ void Menu::up()
 
 void Menu::select()
 {
-	menuItem[activeItem].select();
+	(menuItem[activeItem])->select();
 }
 
 Menu::~Menu() {

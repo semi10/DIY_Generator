@@ -95,13 +95,15 @@ int main(void)
   ssd1306_Fill(Black);
 
 
-  MenuItem menuItem[] = {
-		  MenuItem("1: 10Hz 95%", 2, 0 ),
-		  MenuItem("2: 5Hz 5%"  , 2, 18),
-		  TimerMenuItem("3: 8Hz 35%" , 2, 36)
-  };
+  MenuItem ch1("1: 10Hz 95%", 2, 0 );
+  MenuItem ch2("2: 5Hz 5%"  , 2, 18);
+  TimerMenuItem ch3("3: 8Hz 35%" , 2, 36);
 
-  Menu mainMenu(menuItem, sizeof(menuItem)/sizeof(MenuItem));
+  Menu mainMenu;
+  mainMenu.addMenuItem(&ch1);
+  mainMenu.addMenuItem(&ch2);
+  mainMenu.addMenuItem(&ch3);
+
   activeMenu = &mainMenu;
 
 

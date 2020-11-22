@@ -18,7 +18,8 @@ extern "C" {
 
 class Menu {
 public:
-	Menu(MenuItem *menuItem, uint8_t itemCount);
+	Menu();
+	void addMenuItem(MenuItem *newMenuItem);
 	void drawMenu();
 	virtual ~Menu();
 	void down();
@@ -26,8 +27,8 @@ public:
 	void select();
 
 private:
-	MenuItem *menuItem;
-	uint8_t itemCount;
+	MenuItem *menuItem[3];
+	uint8_t itemCount = 0;
 	uint8_t activeItem = 0;
 
 };
