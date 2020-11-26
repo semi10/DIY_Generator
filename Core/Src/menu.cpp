@@ -7,21 +7,21 @@
 
 #include "menu.h"
 
-Menu::Menu()
+Menu::Menu(Menu *parentMenu)
 {
-
+	this->parentMenu = parentMenu;
 }
 
 
 void Menu::addMenuItem(MenuItem *newMenuItem)
 {
-	menuItem[itemCount] = newMenuItem;
-	itemCount++;
+	menuItem[itemCount++] = newMenuItem;
 }
 
 
 void Menu::drawMenu()
 {
+	ssd1306_Fill(Black);
 	for (int i = 0; i < itemCount; i++)
 	{
 	  SSD1306_COLOR itemColor = (i == activeItem) ? Black : White;
@@ -30,27 +30,44 @@ void Menu::drawMenu()
 	  ssd1306_WriteString(menuItem[i]->str, Font_11x18, itemColor);
 	}
 
+	activeMenuPointer = this;
 	ssd1306_UpdateScreen();
 }
 
-void Menu::down()
+Menu *Menu::down()
 {
 	activeItem = (activeItem + 1) % itemCount;
 
 	drawMenu();
+	return this;
 }
 
 
-void Menu::up()
+Menu *Menu::up()
 {
 	activeItem = (activeItem > 0) ? --activeItem : (itemCount - 1);
 
 	drawMenu();
+	return this;
 }
 
-void Menu::select()
+Menu *Menu::left()
 {
-	(menuItem[activeItem])->select();
+	if (parentMenu) printf("Go to parent menu\n");
+	else printf("No parent menu\n");
+
+	return this;
+}
+
+Menu *Menu::right()
+{
+	return this;
+}
+
+Menu *Menu::select()
+{
+	menuItem[activeItem]->select();
+	return this;
 }
 
 Menu::~Menu() {

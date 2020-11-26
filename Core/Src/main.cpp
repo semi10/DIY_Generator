@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "joystick.h"
 #include "menu.h"
+#include "timerMenuItem.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +47,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+Menu mainMenu;
 Menu *activeMenu;
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -92,24 +96,20 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   ssd1306_Init();
-  ssd1306_Fill(Black);
-
-
-  MenuItem ch1("1: 10Hz 95%", 2, 0 );
-  MenuItem ch2("2: 5Hz 5%"  , 2, 18);
-  TimerMenuItem ch3("3: 8Hz 35%" , 2, 36);
-
-  Menu mainMenu;
-  mainMenu.addMenuItem(&ch1);
-  mainMenu.addMenuItem(&ch2);
-  mainMenu.addMenuItem(&ch3);
 
   activeMenu = &mainMenu;
 
+  TimerMenuItem ch1("1: 10Hz 95%", 2, 0 );
+  TimerMenuItem ch2("2: 5Hz 5%"  , 2, 18);
+  TimerMenuItem ch3("3: 8Hz 35%" , 2, 36);
 
-  activeMenu->drawMenu();
+  mainMenu.addMenuItem(&ch1);
+  mainMenu.addMenuItem(&ch2);
+  mainMenu.addMenuItem(&ch3);
+  mainMenu.drawMenu();
 
   Joystick joystick(activeMenu);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

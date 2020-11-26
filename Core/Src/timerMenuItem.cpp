@@ -7,13 +7,17 @@
 
 #include "timerMenuItem.h"
 
+
 TimerMenuItem::TimerMenuItem(char* str, uint8_t x,  uint8_t y): MenuItem(str, x, y) {
-	// TODO Auto-generated constructor stub
+	  timerPresetMenu.addMenuItem(&setFreqItem);
+	  timerPresetMenu.addMenuItem(&setDCItem);
 }
 
 void TimerMenuItem::select()
 {
 	printf("From TimerMenuItem\n");
+	timerPresetMenu.drawMenu();
+
 }
 
 TimerMenuItem::~TimerMenuItem() {

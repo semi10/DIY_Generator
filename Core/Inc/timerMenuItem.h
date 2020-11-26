@@ -8,13 +8,19 @@
 #ifndef TIMERMENUITEM_H_
 #define TIMERMENUITEM_H_
 
-#include <menuItem.h>
+#include "menuItem.h"
+#include "numericUpDown.h"
+#include "menu.h"
 
 class TimerMenuItem: public MenuItem {
 public:
 	TimerMenuItem(char* str, uint8_t x,  uint8_t y);
 	void select();
 	virtual ~TimerMenuItem();
+private:
+	Menu timerPresetMenu;
+    NumericUpDown setFreqItem = NumericUpDown("Frequency:", 2, 0 );
+    NumericUpDown setDCItem = NumericUpDown("Duty Cycle:", 2, 18);
 };
 
 #endif /* TIMERMENUITEM_H_ */

@@ -9,7 +9,6 @@
 #define MENU_H_
 
 #include "menuItem.h"
-#include "timerMenuItem.h"
 
 extern "C" {
 #include "ssd1306.h"
@@ -18,15 +17,19 @@ extern "C" {
 
 class Menu {
 public:
-	Menu();
+	Menu(Menu *parentMenu = NULL);
 	void addMenuItem(MenuItem *newMenuItem);
 	void drawMenu();
 	virtual ~Menu();
-	void down();
-	void up();
-	void select();
+	Menu *up();
+	Menu *down();
+	Menu *left();
+	Menu *right();
+	Menu *select();
 
-private:
+protected:
+	Menu *parentMenu;
+	Menu *activeMenuPointer;
 	MenuItem *menuItem[3];
 	uint8_t itemCount = 0;
 	uint8_t activeItem = 0;
