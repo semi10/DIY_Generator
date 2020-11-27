@@ -9,15 +9,15 @@
 
 
 TimerMenuItem::TimerMenuItem(char* str, uint8_t x,  uint8_t y): MenuItem(str, x, y) {
+	  timerPresetMenu.parentMenu = this->parentMenu;
 	  timerPresetMenu.addMenuItem(&setFreqItem);
 	  timerPresetMenu.addMenuItem(&setDCItem);
 }
 
-void TimerMenuItem::select()
+Menu* TimerMenuItem::select()
 {
 	printf("From TimerMenuItem\n");
-	timerPresetMenu.drawMenu();
-
+	return &timerPresetMenu;
 }
 
 TimerMenuItem::~TimerMenuItem() {

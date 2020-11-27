@@ -45,6 +45,7 @@ void Joystick::poll()
 			default:
 				printf("Unknown button\n");
 			}
+			activeMenu->drawMenu();
 		}
 	}
 }

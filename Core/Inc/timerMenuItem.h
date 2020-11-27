@@ -15,12 +15,12 @@
 class TimerMenuItem: public MenuItem {
 public:
 	TimerMenuItem(char* str, uint8_t x,  uint8_t y);
-	void select();
+	Menu *select();
 	virtual ~TimerMenuItem();
 private:
 	Menu timerPresetMenu;
-    NumericUpDown setFreqItem = NumericUpDown("Frequency:", 2, 0 );
-    NumericUpDown setDCItem = NumericUpDown("Duty Cycle:", 2, 18);
+    NumericUpDown setFreqItem = NumericUpDown("f: <10Hz>", 2, 0 );
+    NumericUpDown setDCItem = NumericUpDown("D: <95%>", 2, 18);
 };
 
 #endif /* TIMERMENUITEM_H_ */

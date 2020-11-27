@@ -13,7 +13,6 @@ extern "C"
 }
 
 
-
 MenuItem::MenuItem(char* str, uint8_t x,  uint8_t y) {
 	this->str = str;
 	this->x = x;

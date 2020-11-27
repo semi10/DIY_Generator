@@ -26,9 +26,8 @@ public:
 	Menu *left();
 	Menu *right();
 	Menu *select();
-
-protected:
 	Menu *parentMenu;
+protected:
 	Menu *activeMenuPointer;
 	MenuItem *menuItem[3];
 	uint8_t itemCount = 0;

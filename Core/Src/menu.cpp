@@ -15,6 +15,7 @@ Menu::Menu(Menu *parentMenu)
 
 void Menu::addMenuItem(MenuItem *newMenuItem)
 {
+	newMenuItem->parentMenu = this;
 	menuItem[itemCount++] = newMenuItem;
 }
 
@@ -37,8 +38,6 @@ void Menu::drawMenu()
 Menu *Menu::down()
 {
 	activeItem = (activeItem + 1) % itemCount;
-
-	drawMenu();
 	return this;
 }
 
@@ -46,17 +45,13 @@ Menu *Menu::down()
 Menu *Menu::up()
 {
 	activeItem = (activeItem > 0) ? --activeItem : (itemCount - 1);
-
-	drawMenu();
 	return this;
 }
 
 Menu *Menu::left()
 {
-	if (parentMenu) printf("Go to parent menu\n");
-	else printf("No parent menu\n");
-
-	return this;
+	if (parentMenu) return parentMenu;
+	else return this;
 }
 
 Menu *Menu::right()
@@ -66,8 +61,7 @@ Menu *Menu::right()
 
 Menu *Menu::select()
 {
-	menuItem[activeItem]->select();
-	return this;
+	return menuItem[activeItem]->select();
 }
 
 Menu::~Menu() {

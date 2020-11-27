@@ -13,15 +13,16 @@ extern "C"
 #include "stdio.h"
 }
 
+class Menu;
+
 class MenuItem {
 public:
 	MenuItem(char* str, uint8_t x,  uint8_t y);
 	char* str;
-	virtual void select() = 0;
+	virtual Menu *select() = 0;
 	uint8_t x , y;
+	Menu *parentMenu;
 	virtual ~MenuItem();
-private:
-
 };
 
 #endif /* MENUITEM_H_ */

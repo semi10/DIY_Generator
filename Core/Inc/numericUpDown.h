@@ -14,7 +14,7 @@
 class NumericUpDown: public MenuItem {
 public:
 	NumericUpDown(char* str, uint8_t x,  uint8_t y);
-	virtual void select();
+	Menu* select();
 	virtual ~NumericUpDown();
 };
 

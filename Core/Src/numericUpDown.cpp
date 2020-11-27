@@ -12,9 +12,10 @@ NumericUpDown::NumericUpDown(char* str, uint8_t x,  uint8_t y): MenuItem(str, x,
 }
 
 
-void NumericUpDown::select()
+Menu* NumericUpDown::select()
 {
 	printf("From NumericUpDown\n");
+	return this->parentMenu;
 }
 
 NumericUpDown::~NumericUpDown() {
