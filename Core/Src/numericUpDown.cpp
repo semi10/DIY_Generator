@@ -7,18 +7,50 @@
 
 #include "numericUpDown.h"
 
-NumericUpDown::NumericUpDown(char* str, uint8_t x,  uint8_t y): MenuItem(str, x, y) {
 
+#include <string.h>
+
+NumericUpDown::NumericUpDown(char* labelStr, uint8_t x,  uint8_t y, char* unitStr): MenuItem(str, x, y)
+{
+	strncpy(this->labelStr ,labelStr, sizeof(this->labelStr));
+	strncpy(this->unitStr ,unitStr, sizeof(this->unitStr));
+	updateStr();
 }
-
 
 Menu* NumericUpDown::select()
 {
-	printf("From NumericUpDown\n");
+	selected ^= 1;
+	updateStr();
+
 	return this->parentMenu;
 }
 
-NumericUpDown::~NumericUpDown() {
+//void NumericUpDown::up()
+//{
+//	num++;
+//	updateStr();
+//}
+//
+//void NumericUpDown::down()
+//{
+//	num--;
+//	updateStr();
+//}
+
+void NumericUpDown::updateStr()
+{
+	if (selected)
+	{
+		sprintf(str, "%s:<%03u%s>", labelStr, num, unitStr);
+	}
+	else
+	{
+		sprintf(str, "%s: %03u%s ", labelStr, num, unitStr);
+	}
+}
+
+NumericUpDown::~NumericUpDown()
+{
 	// TODO Auto-generated destructor stub
 }
 

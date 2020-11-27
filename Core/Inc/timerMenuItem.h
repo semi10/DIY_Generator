@@ -19,8 +19,8 @@ public:
 	virtual ~TimerMenuItem();
 private:
 	Menu timerPresetMenu;
-    NumericUpDown setFreqItem = NumericUpDown("f: <10Hz>", 2, 0 );
-    NumericUpDown setDCItem = NumericUpDown("D: <95%>", 2, 18);
+    NumericUpDown setFreqItem = NumericUpDown("f", 2, 0, "Hz");
+    NumericUpDown setDCItem = NumericUpDown("D", 2, 18,"% ");
 };
 
 #endif /* TIMERMENUITEM_H_ */
