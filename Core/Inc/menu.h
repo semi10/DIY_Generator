@@ -26,6 +26,7 @@ public:
 	Menu *left();
 	Menu *right();
 	Menu *select();
+	Menu *back();
 	Menu *parentMenu;
 protected:
 	Menu *activeMenuPointer;

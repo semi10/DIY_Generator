@@ -10,8 +10,9 @@
 
 #include <string.h>
 
-NumericUpDown::NumericUpDown(char* labelStr, uint8_t x,  uint8_t y, char* unitStr): MenuItem(str, x, y)
+NumericUpDown::NumericUpDown(char* labelStr, uint8_t x,  uint8_t y, char* unitStr, uint8_t step): MenuItem(labelStr, x, y)
 {
+	this->step = step;
 	strncpy(this->labelStr ,labelStr, sizeof(this->labelStr));
 	strncpy(this->unitStr ,unitStr, sizeof(this->unitStr));
 	updateStr();
@@ -25,17 +26,42 @@ Menu* NumericUpDown::select()
 	return this->parentMenu;
 }
 
-//void NumericUpDown::up()
-//{
-//	num++;
-//	updateStr();
-//}
-//
-//void NumericUpDown::down()
-//{
-//	num--;
-//	updateStr();
-//}
+
+void NumericUpDown::up()
+{
+	selected = false;
+	updateStr();
+}
+
+void NumericUpDown::down()
+{
+	selected = false;
+	updateStr();
+}
+
+
+Menu* NumericUpDown::left()
+{
+	if (selected)
+	{
+		num -= step;
+		updateStr();
+		return parentMenu;
+	}
+	else
+	{
+		return parentMenu->back();
+	}
+}
+
+void NumericUpDown::right()
+{
+	if (selected)
+	{
+		num += step;
+		updateStr();
+	}
+}
 
 void NumericUpDown::updateStr()
 {

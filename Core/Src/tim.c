@@ -26,12 +26,12 @@
 
 TIM_HandleTypeDef htim2;
 
+
 /* TIM2 init function */
 void MX_TIM2_Init(void)
 {
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
-
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 48 - 1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;

@@ -14,10 +14,15 @@
 
 class NumericUpDown: public MenuItem {
 public:
-	NumericUpDown(char* labelStr, uint8_t x,  uint8_t y, char* unitStr);
+	NumericUpDown(char* labelStr, uint8_t x,  uint8_t y, char* unitStr, uint8_t step = 1);
 	Menu* select();
+	Menu *left();
+	void right();
+	void up();
+	void down();
 	virtual ~NumericUpDown();
 private:
+	uint8_t step;
 	bool selected = false;
 	char labelStr[2];
 	uint16_t num = 0;

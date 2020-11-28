@@ -20,7 +20,30 @@ Menu* TimerMenuItem::select()
 	return &timerPresetMenu;
 }
 
-TimerMenuItem::~TimerMenuItem() {
+Menu* TimerMenuItem::left()
+{
+	return parentMenu->back();
+}
+
+void TimerMenuItem::right()
+{
+	printf("TimerMenuItem Right\n");
+}
+
+void TimerMenuItem::up()
+{
+	printf("TimerMenuItem Up\n");
+}
+
+void TimerMenuItem::down()
+{
+	printf("TimerMenuItem Down\n");
+}
+
+
+
+TimerMenuItem::~TimerMenuItem()
+{
 	// TODO Auto-generated destructor stub
 }
 

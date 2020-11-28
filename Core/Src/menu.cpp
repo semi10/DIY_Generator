@@ -37,6 +37,7 @@ void Menu::drawMenu()
 
 Menu *Menu::down()
 {
+	menuItem[activeItem]->up();
 	activeItem = (activeItem + 1) % itemCount;
 	return this;
 }
@@ -44,24 +45,31 @@ Menu *Menu::down()
 
 Menu *Menu::up()
 {
+	menuItem[activeItem]->up();
 	activeItem = (activeItem > 0) ? --activeItem : (itemCount - 1);
 	return this;
 }
 
 Menu *Menu::left()
 {
-	if (parentMenu) return parentMenu;
-	else return this;
+	return menuItem[activeItem]->left();
 }
 
 Menu *Menu::right()
 {
+	menuItem[activeItem]->right();
 	return this;
 }
 
 Menu *Menu::select()
 {
 	return menuItem[activeItem]->select();
+}
+
+Menu *Menu::back()
+{
+	if (parentMenu) return parentMenu;
+	else return this;
 }
 
 Menu::~Menu() {
