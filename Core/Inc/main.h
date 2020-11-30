@@ -61,7 +61,7 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 #define BASE_CLK 48000000
-#define PRESCALER 48000
+#define PRESCALER 4800
 #define JoystickLeft_Pin GPIO_PIN_11
 #define JoystickLeft_GPIO_Port GPIOB
 #define JoystickRight_Pin GPIO_PIN_12
