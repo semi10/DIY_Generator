@@ -28,19 +28,19 @@ void Joystick::poll()
 			switch (i)
 			{
 			case BT_LEFT:
-				activeMenu = activeMenu->left();
+				activeMenu->getActiveTimer()->left();
 				break;
 			case BT_RIGHT:
-				activeMenu = activeMenu->right();
+				activeMenu->getActiveTimer()->right();
 				break;
 			case BT_DOWN:
-				activeMenu = activeMenu->down();
+				activeMenu->down();
 				break;
 			case BT_UP:
-				activeMenu = activeMenu->up();
+				activeMenu->up();
 				break;
 			case BT_SELECT:
-				activeMenu = activeMenu->select();
+				activeMenu->getActiveTimer()->select();
 				break;
 			default:
 				printf("Unknown button\n");

@@ -8,7 +8,7 @@
 #ifndef MENU_H_
 #define MENU_H_
 
-#include "menuItem.h"
+#include "timer.h"
 
 extern "C" {
 #include "ssd1306.h"
@@ -17,22 +17,17 @@ extern "C" {
 
 class Menu {
 public:
-	Menu(Menu *parentMenu = NULL);
-	void addMenuItem(MenuItem *newMenuItem);
+	Menu();
+	void addTimer(Timer *timer);
 	void drawMenu();
+	void up();
+	void down();
 	virtual ~Menu();
-	Menu *up();
-	Menu *down();
-	Menu *left();
-	Menu *right();
-	Menu *select();
-	Menu *back();
-	Menu *parentMenu;
-protected:
-	Menu *activeMenuPointer;
-	MenuItem *menuItem[3];
+	Timer *getActiveTimer() { return timer[activeTimer]; }
+private:
+	Timer *timer[3];
+	uint8_t activeTimer = 0;
 	uint8_t itemCount = 0;
-	uint8_t activeItem = 0;
 
 };
 

@@ -7,16 +7,15 @@
 
 #include "menu.h"
 
-Menu::Menu(Menu *parentMenu)
+Menu::Menu()
 {
-	this->parentMenu = parentMenu;
+
 }
 
 
-void Menu::addMenuItem(MenuItem *newMenuItem)
+void Menu::addTimer(Timer *timer)
 {
-	newMenuItem->parentMenu = this;
-	menuItem[itemCount++] = newMenuItem;
+	this->timer[itemCount++] = timer;
 }
 
 
@@ -25,52 +24,29 @@ void Menu::drawMenu()
 	ssd1306_Fill(Black);
 	for (int i = 0; i < itemCount; i++)
 	{
-	  SSD1306_COLOR itemColor = (i == activeItem) ? Black : White;
+	  SSD1306_COLOR itemColor = (i == activeTimer) ? Black : White;
 
-	  ssd1306_SetCursor(menuItem[i]->x, menuItem[i]->y);
-	  ssd1306_WriteString(menuItem[i]->str, Font_11x18, itemColor);
+	  ssd1306_SetCursor(0, i * 18);
+	  ssd1306_WriteString(timer[i]->str, Font_11x18, itemColor);
 	}
 
-	activeMenuPointer = this;
 	ssd1306_UpdateScreen();
 }
 
-Menu *Menu::down()
+void Menu::down()
 {
-	menuItem[activeItem]->up();
-	activeItem = (activeItem + 1) % itemCount;
-	return this;
+	timer[activeTimer]->unselect();
+	activeTimer = (activeTimer + 1) % itemCount;
+
 }
 
 
-Menu *Menu::up()
+void Menu::up()
 {
-	menuItem[activeItem]->up();
-	activeItem = (activeItem > 0) ? --activeItem : (itemCount - 1);
-	return this;
+	timer[activeTimer]->unselect();
+	activeTimer = (activeTimer > 0) ? --activeTimer : (itemCount - 1);
 }
 
-Menu *Menu::left()
-{
-	return menuItem[activeItem]->left();
-}
-
-Menu *Menu::right()
-{
-	menuItem[activeItem]->right();
-	return this;
-}
-
-Menu *Menu::select()
-{
-	return menuItem[activeItem]->select();
-}
-
-Menu *Menu::back()
-{
-	if (parentMenu) return parentMenu;
-	else return this;
-}
 
 Menu::~Menu() {
 	// TODO Auto-generated destructor stub

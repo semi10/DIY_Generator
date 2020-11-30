@@ -27,7 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "joystick.h"
 #include "menu.h"
-#include "timerMenuItem.h"
+#include "timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -80,7 +80,6 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -94,18 +93,23 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   MX_TIM2_Init();
+  MX_TIM3_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   ssd1306_Init();
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
 
   activeMenu = &mainMenu;
 
-  TimerMenuItem ch1("1: 10Hz 95%", 2, 0 );
-  TimerMenuItem ch2("2: 5Hz 5%"  , 2, 18);
-  TimerMenuItem ch3("3: 8Hz 35%" , 2, 36);
+  Timer ch1('1', &htim2);
+  Timer ch2('2', &htim3);
+  Timer ch3('3', &htim4);
 
-  mainMenu.addMenuItem(&ch1);
-  mainMenu.addMenuItem(&ch2);
-  mainMenu.addMenuItem(&ch3);
+  mainMenu.addTimer(&ch1);
+  mainMenu.addTimer(&ch2);
+  mainMenu.addTimer(&ch3);
   mainMenu.drawMenu();
 
   Joystick joystick(activeMenu);
