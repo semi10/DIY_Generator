@@ -61,7 +61,7 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PBPin PBPin PBPin PBPin
                            PBPin */
-  GPIO_InitStruct.Pin = JoystickLeft_Pin|JoystickRight_Pin|JoystickDown_Pin|JoystickUp_Pin
+  GPIO_InitStruct.Pin = JoystickDown_Pin|JoystickLeft_Pin|JoystickUp_Pin|JoystickRight_Pin
                           |JoystickSelect_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;

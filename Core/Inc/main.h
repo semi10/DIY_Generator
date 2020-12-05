@@ -62,14 +62,14 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define BASE_CLK 48000000
 #define PRESCALER 4800
-#define JoystickLeft_Pin GPIO_PIN_11
-#define JoystickLeft_GPIO_Port GPIOB
-#define JoystickRight_Pin GPIO_PIN_12
-#define JoystickRight_GPIO_Port GPIOB
-#define JoystickDown_Pin GPIO_PIN_13
+#define JoystickDown_Pin GPIO_PIN_11
 #define JoystickDown_GPIO_Port GPIOB
-#define JoystickUp_Pin GPIO_PIN_14
+#define JoystickLeft_Pin GPIO_PIN_12
+#define JoystickLeft_GPIO_Port GPIOB
+#define JoystickUp_Pin GPIO_PIN_13
 #define JoystickUp_GPIO_Port GPIOB
+#define JoystickRight_Pin GPIO_PIN_14
+#define JoystickRight_GPIO_Port GPIOB
 #define JoystickSelect_Pin GPIO_PIN_15
 #define JoystickSelect_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */

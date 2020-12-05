@@ -92,24 +92,28 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_I2C1_Init();
+  MX_TIM1_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   ssd1306_Init();
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
 
   activeMenu = &mainMenu;
 
-  Timer ch1('1', &htim2);
-  Timer ch2('2', &htim3);
-  Timer ch3('3', &htim4);
+  Timer ch1('1', &htim1);
+  Timer ch2('2', &htim2);
+  Timer ch3('3', &htim3);
+  Timer ch4('4', &htim4);
 
   mainMenu.addTimer(&ch1);
   mainMenu.addTimer(&ch2);
   mainMenu.addTimer(&ch3);
+  mainMenu.addTimer(&ch4);
   mainMenu.drawMenu();
 
   Joystick joystick(activeMenu);

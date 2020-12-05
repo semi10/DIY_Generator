@@ -25,7 +25,7 @@ public:
 	virtual ~Menu();
 	Timer *getActiveTimer() { return timer[activeTimer]; }
 private:
-	Timer *timer[3];
+	Timer *timer[4];
 	uint8_t activeTimer = 0;
 	uint8_t itemCount = 0;
 

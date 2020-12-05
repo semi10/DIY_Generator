@@ -26,7 +26,7 @@ void Menu::drawMenu()
 	{
 	  SSD1306_COLOR itemColor = (i == activeTimer) ? Black : White;
 
-	  ssd1306_SetCursor(0, i * 18);
+	  ssd1306_SetCursor(0, i * 15);
 	  ssd1306_WriteString(timer[i]->str, Font_11x18, itemColor);
 	}
 

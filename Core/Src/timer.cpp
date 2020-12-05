@@ -81,7 +81,7 @@ void Timer::right()
 	switch (timerState)
 	{
 	case FREQ_SEL:
-		frequency = min(999, frequency + 1);
+		frequency = min(99, frequency + 1);
 		setFrequency(frequency);
 		printFreqSel();
 		break;
