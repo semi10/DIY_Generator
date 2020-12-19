@@ -94,7 +94,7 @@ void Timer::right()
 		printDutySel();
 		break;
 	case IDLE:
-		toggleTimer();
+		toggle();
 	default:
 		unselect();
 	}
@@ -112,7 +112,7 @@ void Timer::setFrequencyAndDC(uint16_t frequency)
 	HAL_TIM_PWM_DeInit(htim);
 	HAL_TIM_PWM_Init(htim);
 
-	turnTimer(preset->timerIsOn);
+	turn(preset->timerIsOn);
 }
 
 void Timer::setDutyCycle(uint8_t dutyCycle)
@@ -123,7 +123,7 @@ void Timer::setDutyCycle(uint8_t dutyCycle)
 	htim->Instance->CCR1 = (htim->Init.Period * (preset->dutyCycle / 100.0f));
 }
 
-void Timer::turnTimer(bool timerIsOn)
+void Timer::turn(bool timerIsOn)
 {
 	preset->timerIsOn = timerIsOn;
 
@@ -139,15 +139,27 @@ void Timer::turnTimer(bool timerIsOn)
 	printDefault();
 }
 
-void Timer::toggleTimer()
+void Timer::toggle()
 {
 	preset->timerIsOn ^= 1;
-	turnTimer(preset->timerIsOn);
+	turn(preset->timerIsOn);
+}
+
+void Timer::setState(GeneratorState generatorState)
+{
+	if (generatorState == ACTIVE)
+	{
+		turn(preset->timerIsOn);
+	}
+	else
+	{
+		HAL_TIM_PWM_Stop(htim, TIM_CHANNEL_1);
+	}
 }
 
 void Timer::saveTimerPreset()
 {
-	preset->presetUpdated = true;
+	//preset->presetUpdated = true;
 }
 
 void Timer::printFreqSel()

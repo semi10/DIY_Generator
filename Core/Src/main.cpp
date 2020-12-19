@@ -108,7 +108,7 @@ int main(void)
 
   activeMenu = &mainMenu;
 
-  loadTimersPreset();
+  //loadTimersPreset();
 
   Timer ch1('1', &htim1, &timerPreset[0]);
   Timer ch2('2', &htim2, &timerPreset[1]);
@@ -130,7 +130,7 @@ int main(void)
   while (1)
   {
 	  joystick.poll();
-	  updateTimersPreset();
+	  //updateTimersPreset();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -183,9 +183,9 @@ void updateTimersPreset()
 	{
 		if (timerPreset[i].presetUpdated)
 		{
-			Flash_Write_Data(START_PAGE_ADDR, (uint32_t*)timerPreset);
-			timerPreset[i].presetUpdated = false;
-			break;
+			//Flash_Write_Data(START_PAGE_ADDR, (uint32_t*)timerPreset);
+			//timerPreset[i].presetUpdated = false;
+			//break;
 		}
 	}
 }

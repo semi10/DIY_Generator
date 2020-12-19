@@ -22,7 +22,7 @@
 
 
 enum MenuState { IDLE, FREQ_SEL, DUTY_SEL };
-enum TimerState { OFF, ON };
+enum GeneratorState { DISABLED, ACTIVE };
 
 struct TimerPreset
 {
@@ -43,8 +43,8 @@ public:
 	void unselect();
 	void left();
 	void right();
-	void turnTimer(bool timerIsOn);
-	void toggleTimer();
+	void toggle();
+	void setState(GeneratorState generatorState);
 	bool isIdle() { return (menuState == IDLE); }
 	virtual ~Timer();
 private:
@@ -53,6 +53,7 @@ private:
 	uint8_t calcDutyCycle();
 	void setFrequencyAndDC(uint16_t frequency);
 	void setDutyCycle(uint8_t dutyCycle);
+	void turn(bool timerIsOn);
 	void saveTimerPreset();
 	void printFreqSel();
 	void printDutySel();

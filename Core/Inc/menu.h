@@ -27,6 +27,7 @@ public:
 	void down();
 	void right();
 	void left();
+	void select();
 	virtual ~Menu();
 	Timer *getActiveTimer() { return timer[activeTimer]; }
 	bool isActiveTimerIdle();
@@ -34,8 +35,8 @@ private:
 	Timer *timer[MAX_TIMER_NUMB];
 	uint8_t activeTimer = 0;
 	uint8_t itemCount = 0;
-	void toggleAllTimersOff();
-
+	GeneratorState generatorState = ACTIVE;
+	void toggleGeneratorState();
 };
 
 #endif /* MENU_H_ */
