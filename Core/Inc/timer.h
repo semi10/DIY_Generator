@@ -29,12 +29,11 @@ struct TimerPreset
 	uint16_t frequency;
 	uint8_t dutyCycle;
 	bool timerIsOn;
-	char presetUpdated;
 };
 
 class Timer {
 public:
-	Timer(char labelStr, TIM_HandleTypeDef* htim, TimerPreset* timerPreset);
+	Timer(char labelStr, TIM_HandleTypeDef* htim, TimerPreset* timerPreset, void (*storePresetCallback)(void));
 	TIM_HandleTypeDef* htim;
 	TimerPreset* preset;
 	char labelStr;
@@ -54,7 +53,7 @@ private:
 	void setFrequencyAndDC(uint16_t frequency);
 	void setDutyCycle(uint8_t dutyCycle);
 	void turn(bool timerIsOn);
-	void saveTimerPreset();
+	void (*storePreset)(void);
 	void printFreqSel();
 	void printDutySel();
 	void printDefault();

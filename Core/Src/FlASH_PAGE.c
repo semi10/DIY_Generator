@@ -22,14 +22,14 @@ static uint32_t GetPage(uint32_t Address)
   return -1;
 }
 
-uint32_t Flash_Write_Data (uint32_t StartPageAddress, uint32_t * DATA_32)
+uint32_t Flash_Write_Data (uint32_t StartPageAddress, uint32_t * DATA_32, uint32_t len)
 {
 
 	static FLASH_EraseInitTypeDef EraseInitStruct;
 	uint32_t PAGEError;
 	int sofar=0;
 
-	int numberofwords = (strlen(DATA_32)/4) + ((strlen(DATA_32) % 4) != 0);
+	int numberofwords = (len/4) + ((len % 4) != 0);
 
 	  /* Unlock the Flash to enable the flash control register access *************/
 	   HAL_FLASH_Unlock();
@@ -75,28 +75,18 @@ uint32_t Flash_Write_Data (uint32_t StartPageAddress, uint32_t * DATA_32)
 }
 
 
-void Flash_Read_Data (uint32_t StartPageAddress, __IO uint32_t * DATA_32)
+void Flash_Read_Data (uint32_t StartPageAddress, __IO uint32_t * DATA_32, uint32_t len)
 {
 	while (1)
 	{
-		*DATA_32 = *(__IO uint32_t *)StartPageAddress;
-		if (*DATA_32 == 0xffffffff)
+		if (len <= 0)
 		{
-			*DATA_32 = '\0';
 			break;
 		}
+		*DATA_32 = *(__IO uint32_t *)StartPageAddress;
 		StartPageAddress += 4;
+		len -= 4;
 		DATA_32++;
-	}
-}
-
-void Convert_To_Str (uint32_t *data, char *str)
-{
-	int numberofbytes = ((strlen(data)/4) + ((strlen(data) % 4) != 0)) *4;
-
-	for (int i=0; i<numberofbytes; i++)
-	{
-		str[i] = data[i/4]>>(8*(i%4));
 	}
 }
 

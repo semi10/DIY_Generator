@@ -10,11 +10,13 @@
 #define min(a,b) ((a)<(b)?(a):(b))
 #define max(a,b) ((a)>(b)?(a):(b))
 
-Timer::Timer(char labelStr,  TIM_HandleTypeDef* htim, TimerPreset* timerPreset){
+Timer::Timer(char labelStr,  TIM_HandleTypeDef* htim, TimerPreset* timerPreset, void (*storePresetCallback)(void)){
 	this->labelStr = labelStr;
 	this->htim = htim;
 
 	preset = timerPreset;
+
+	storePreset = storePresetCallback;
 
 	setFrequencyAndDC(preset->frequency);
 
@@ -44,7 +46,7 @@ void Timer::select()
 void Timer::unselect()
 {
 	menuState = IDLE;
-	saveTimerPreset();
+	storePreset();
 	printDefault();
 }
 
@@ -95,6 +97,7 @@ void Timer::right()
 		break;
 	case IDLE:
 		toggle();
+		break;
 	default:
 		unselect();
 	}
@@ -143,6 +146,7 @@ void Timer::toggle()
 {
 	preset->timerIsOn ^= 1;
 	turn(preset->timerIsOn);
+	storePreset();
 }
 
 void Timer::setState(GeneratorState generatorState)
@@ -157,10 +161,6 @@ void Timer::setState(GeneratorState generatorState)
 	}
 }
 
-void Timer::saveTimerPreset()
-{
-	//preset->presetUpdated = true;
-}
 
 void Timer::printFreqSel()
 {

@@ -56,6 +56,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+void storeTimersPreset();
 void updateTimersPreset();
 void loadTimersPreset();
 /* USER CODE END EFP */

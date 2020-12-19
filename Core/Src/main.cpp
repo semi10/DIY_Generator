@@ -22,6 +22,7 @@
 #include "i2c.h"
 #include "tim.h"
 #include "gpio.h"
+#include <string.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -108,12 +109,13 @@ int main(void)
 
   activeMenu = &mainMenu;
 
-  //loadTimersPreset();
 
-  Timer ch1('1', &htim1, &timerPreset[0]);
-  Timer ch2('2', &htim2, &timerPreset[1]);
-  Timer ch3('3', &htim3, &timerPreset[2]);
-  Timer ch4('4', &htim4, &timerPreset[3]);
+  loadTimersPreset();
+
+  Timer ch1('1', &htim1, &timerPreset[0], storeTimersPreset);
+  Timer ch2('2', &htim2, &timerPreset[1], storeTimersPreset);
+  Timer ch3('3', &htim3, &timerPreset[2], storeTimersPreset);
+  Timer ch4('4', &htim4, &timerPreset[3], storeTimersPreset);
 
   mainMenu.addTimer(&ch1);
   mainMenu.addTimer(&ch2);
@@ -177,30 +179,27 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void updateTimersPreset()
+bool isPresetChanged()
 {
-	for (int i = 0; i < MAX_TIMER_NUMB; i++)
+	TimerPreset storedPreset[MAX_TIMER_NUMB];
+
+	Flash_Read_Data (START_PAGE_ADDR, (uint32_t*)storedPreset, sizeof(storedPreset));
+
+	return memcmp(storedPreset, timerPreset, sizeof(timerPreset));
+}
+
+void storeTimersPreset()
+{
+	if (isPresetChanged())
 	{
-		if (timerPreset[i].presetUpdated)
-		{
-			//Flash_Write_Data(START_PAGE_ADDR, (uint32_t*)timerPreset);
-			//timerPreset[i].presetUpdated = false;
-			//break;
-		}
+		Flash_Write_Data(START_PAGE_ADDR, (uint32_t*)timerPreset, sizeof(timerPreset));
 	}
 }
 
+
 void loadTimersPreset()
 {
-//	for (int i = 0; i < MAX_TIMER_NUMB; i++)
-//	{
-//		if (timerPreset[i].presetUpdated)
-//		{
-//			Flash_Write_Data(START_PAGE_ADDR, (uint32_t*)timerPreset);
-//			timerPreset[i].presetUpdated = false;
-//			break;
-//		}
-//	}
+	Flash_Read_Data (START_PAGE_ADDR, (uint32_t*)timerPreset, sizeof(timerPreset));
 }
 
 /* USER CODE END 4 */
