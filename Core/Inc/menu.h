@@ -15,6 +15,9 @@ extern "C" {
 #include "stdio.h"
 }
 
+#define MAX_TIMER_NUMB 4
+#define START_PAGE_ADDR 0x0801FC00L
+
 class Menu {
 public:
 	Menu();
@@ -22,12 +25,16 @@ public:
 	void drawMenu();
 	void up();
 	void down();
+	void right();
+	void left();
 	virtual ~Menu();
 	Timer *getActiveTimer() { return timer[activeTimer]; }
+	bool isActiveTimerIdle();
 private:
-	Timer *timer[4];
+	Timer *timer[MAX_TIMER_NUMB];
 	uint8_t activeTimer = 0;
 	uint8_t itemCount = 0;
+	void toggleAllTimersOff();
 
 };
 

@@ -28,6 +28,9 @@
 #include "joystick.h"
 #include "menu.h"
 #include "timer.h"
+extern "C" {
+#include "FLASH_PAGE.h"
+}
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,7 +52,7 @@
 /* USER CODE BEGIN PV */
 Menu mainMenu;
 Menu *activeMenu;
-
+TimerPreset timerPreset[MAX_TIMER_NUMB];
 
 /* USER CODE END PV */
 
@@ -105,10 +108,12 @@ int main(void)
 
   activeMenu = &mainMenu;
 
-  Timer ch1('1', &htim1);
-  Timer ch2('2', &htim2);
-  Timer ch3('3', &htim3);
-  Timer ch4('4', &htim4);
+  loadTimersPreset();
+
+  Timer ch1('1', &htim1, &timerPreset[0]);
+  Timer ch2('2', &htim2, &timerPreset[1]);
+  Timer ch3('3', &htim3, &timerPreset[2]);
+  Timer ch4('4', &htim4, &timerPreset[3]);
 
   mainMenu.addTimer(&ch1);
   mainMenu.addTimer(&ch2);
@@ -125,6 +130,7 @@ int main(void)
   while (1)
   {
 	  joystick.poll();
+	  updateTimersPreset();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -171,6 +177,31 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void updateTimersPreset()
+{
+	for (int i = 0; i < MAX_TIMER_NUMB; i++)
+	{
+		if (timerPreset[i].presetUpdated)
+		{
+			Flash_Write_Data(START_PAGE_ADDR, (uint32_t*)timerPreset);
+			timerPreset[i].presetUpdated = false;
+			break;
+		}
+	}
+}
+
+void loadTimersPreset()
+{
+//	for (int i = 0; i < MAX_TIMER_NUMB; i++)
+//	{
+//		if (timerPreset[i].presetUpdated)
+//		{
+//			Flash_Write_Data(START_PAGE_ADDR, (uint32_t*)timerPreset);
+//			timerPreset[i].presetUpdated = false;
+//			break;
+//		}
+//	}
+}
 
 /* USER CODE END 4 */
 

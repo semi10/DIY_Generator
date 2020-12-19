@@ -10,38 +10,41 @@
 #define min(a,b) ((a)<(b)?(a):(b))
 #define max(a,b) ((a)>(b)?(a):(b))
 
-Timer::Timer(char labelStr,  TIM_HandleTypeDef* htim){
+Timer::Timer(char labelStr,  TIM_HandleTypeDef* htim, TimerPreset* timerPreset){
 	this->labelStr = labelStr;
 	this->htim = htim;
 
-	frequency = calcFrequency();
-	dutyCycle = calcDutyCycle();
+	preset = timerPreset;
+
+	setFrequencyAndDC(preset->frequency);
+
 	printDefault();
 }
 
 void Timer::select()
 {
-	switch (timerState)
+	switch (menuState)
 	{
 	case IDLE:
-		timerState = FREQ_SEL;
+		menuState = FREQ_SEL;
 		printFreqSel();
 		break;
 	case FREQ_SEL:
-		timerState = DUTY_SEL;
+		menuState = DUTY_SEL;
 		printDutySel();
 		break;
 	case DUTY_SEL:
 	default:
 		unselect();
-		timerState = IDLE;
+		menuState = IDLE;
 		printDefault();
 	}
 }
 
 void Timer::unselect()
 {
-	timerState = IDLE;
+	menuState = IDLE;
+	saveTimerPreset();
 	printDefault();
 }
 
@@ -58,16 +61,16 @@ uint8_t Timer::calcDutyCycle()
 
 void Timer::left()
 {
-	switch (timerState)
+	switch (menuState)
 	{
 	case FREQ_SEL:
-		frequency = max(1, frequency - 1);
-		setFrequency(frequency);
+		preset->frequency -= FREQUENCY_STEP;
+		setFrequencyAndDC(preset->frequency);
 		printFreqSel();
 		break;
 	case DUTY_SEL:
-		dutyCycle = max(5, dutyCycle - 5);
-		setDutyCycle(dutyCycle);
+		preset->dutyCycle -= DUTY_CYLCE_STEP;
+		setDutyCycle(preset->dutyCycle);
 		printDutySel();
 		break;
 	case IDLE:
@@ -78,54 +81,97 @@ void Timer::left()
 
 void Timer::right()
 {
-	switch (timerState)
+	switch (menuState)
 	{
 	case FREQ_SEL:
-		frequency = min(99, frequency + 1);
-		setFrequency(frequency);
+		preset->frequency += FREQUENCY_STEP;
+		setFrequencyAndDC(preset->frequency);
 		printFreqSel();
 		break;
 	case DUTY_SEL:
-		dutyCycle = min(95, dutyCycle + 5);
-		setDutyCycle(dutyCycle);
+		preset->dutyCycle += DUTY_CYLCE_STEP;
+		setDutyCycle(preset->dutyCycle);
 		printDutySel();
 		break;
 	case IDLE:
+		toggleTimer();
 	default:
 		unselect();
 	}
 }
 
-void Timer::setFrequency(uint16_t frequency)
+void Timer::setFrequencyAndDC(uint16_t frequency)
 {
-	htim->Init.Period = (BASE_CLK / (PRESCALER * frequency)) - 1;
-	setDutyCycle(dutyCycle);
+	preset->frequency = min(FREQUENCY_MAX, frequency);
+	preset->frequency = max(FREQUENCY_MIN, frequency);
+
+
+	htim->Init.Period = (BASE_CLK / (PRESCALER * preset->frequency)) - 1;
+	setDutyCycle(preset->dutyCycle);
 
 	HAL_TIM_PWM_DeInit(htim);
 	HAL_TIM_PWM_Init(htim);
-	HAL_TIM_PWM_Start(htim, TIM_CHANNEL_1);
+
+	turnTimer(preset->timerIsOn);
 }
 
 void Timer::setDutyCycle(uint8_t dutyCycle)
 {
-	htim->Instance->CCR1 = (htim->Init.Period * (dutyCycle / 100.0f));
+	preset->dutyCycle = min(DUTY_CYCLE_MAX, dutyCycle);
+	preset->dutyCycle = max(DUTY_CYCLE_MIN, dutyCycle);
+
+	htim->Instance->CCR1 = (htim->Init.Period * (preset->dutyCycle / 100.0f));
+}
+
+void Timer::turnTimer(bool timerIsOn)
+{
+	preset->timerIsOn = timerIsOn;
+
+	if (timerIsOn)
+	{
+		HAL_TIM_PWM_Start(htim, TIM_CHANNEL_1);
+	}
+	else
+	{
+		HAL_TIM_PWM_Stop(htim, TIM_CHANNEL_1);
+	}
+
+	printDefault();
+}
+
+void Timer::toggleTimer()
+{
+	preset->timerIsOn ^= 1;
+	turnTimer(preset->timerIsOn);
+}
+
+void Timer::saveTimerPreset()
+{
+	preset->presetUpdated = true;
 }
 
 void Timer::printFreqSel()
 {
-	if (frequency < 10) { sprintf(str, "%c <%uHz>%2u%% ", labelStr, frequency, dutyCycle); }
-	else 				{ sprintf(str, "%c<%2uHz>%2u%% ", labelStr, frequency, dutyCycle); }
+	if (preset->frequency < 10) { sprintf(str, "%c <%uHz>%2u%% ", labelStr, preset->frequency, preset->dutyCycle); }
+	else 				{ sprintf(str, "%c<%2uHz>%2u%% ", labelStr, preset->frequency, preset->dutyCycle); }
 }
 
 void Timer::printDutySel()
 {
-	if (dutyCycle < 10)	 { sprintf(str, "%c %2uHz <%u%%>", labelStr, frequency, dutyCycle); }
-	else				 { sprintf(str, "%c %2uHz<%2u%%>", labelStr, frequency, dutyCycle); }
+	if (preset->dutyCycle < 10)	 { sprintf(str, "%c %2uHz <%u%%>", labelStr, preset->frequency, preset->dutyCycle); }
+	else				 { sprintf(str, "%c %2uHz<%2u%%>", labelStr, preset->frequency, preset->dutyCycle); }
 }
 
 void Timer::printDefault()
 {
-	sprintf(str, "%c %2uHz %2u%% ", labelStr, frequency, dutyCycle);
+	if (preset->timerIsOn)
+	{
+		sprintf(str, "%c %2uHz %2u%% ", labelStr, preset->frequency, preset->dutyCycle);
+	}
+	else
+	{
+		sprintf(str, "%c %2uHz OFF ", labelStr, preset->frequency);
+	}
 }
 
 

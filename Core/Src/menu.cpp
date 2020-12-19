@@ -35,7 +35,7 @@ void Menu::drawMenu()
 
 void Menu::down()
 {
-	timer[activeTimer]->unselect();
+	getActiveTimer()->unselect();
 	activeTimer = (activeTimer + 1) % itemCount;
 
 }
@@ -43,9 +43,42 @@ void Menu::down()
 
 void Menu::up()
 {
-	timer[activeTimer]->unselect();
+	getActiveTimer()->unselect();
 	activeTimer = (activeTimer > 0) ? --activeTimer : (itemCount - 1);
 }
+
+void Menu::right()
+{
+	getActiveTimer()->right();
+}
+
+void Menu::left()
+{
+	if (isActiveTimerIdle())
+	{
+		toggleAllTimersOff();
+	}
+	else
+	{
+		getActiveTimer()->left();
+	}
+}
+
+void Menu::toggleAllTimersOff()
+{
+	for (int i = 0; i < MAX_TIMER_NUMB; i++)
+	{
+		timer[i]->turnTimer(OFF);
+	}
+}
+
+
+bool Menu::isActiveTimerIdle()
+{
+	return getActiveTimer()->isIdle();
+}
+
+
 
 
 Menu::~Menu() {

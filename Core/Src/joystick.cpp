@@ -28,10 +28,10 @@ void Joystick::poll()
 			switch (i)
 			{
 			case BT_LEFT:
-				activeMenu->getActiveTimer()->left();
+				activeMenu->left();
 				break;
 			case BT_RIGHT:
-				activeMenu->getActiveTimer()->right();
+				activeMenu->right();
 				break;
 			case BT_DOWN:
 				activeMenu->down();
