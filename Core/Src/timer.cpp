@@ -66,13 +66,11 @@ void Timer::left()
 	switch (menuState)
 	{
 	case FREQ_SEL:
-		preset->frequency -= FREQUENCY_STEP;
-		setFrequencyAndDC(preset->frequency);
+		setFrequencyAndDC(preset->frequency -= FREQUENCY_STEP);
 		printFreqSel();
 		break;
 	case DUTY_SEL:
-		preset->dutyCycle -= DUTY_CYLCE_STEP;
-		setDutyCycle(preset->dutyCycle);
+		setDutyCycle(preset->dutyCycle -= DUTY_CYLCE_STEP);
 		printDutySel();
 		break;
 	case IDLE:
@@ -86,13 +84,11 @@ void Timer::right()
 	switch (menuState)
 	{
 	case FREQ_SEL:
-		preset->frequency += FREQUENCY_STEP;
-		setFrequencyAndDC(preset->frequency);
+		setFrequencyAndDC(preset->frequency += FREQUENCY_STEP);
 		printFreqSel();
 		break;
 	case DUTY_SEL:
-		preset->dutyCycle += DUTY_CYLCE_STEP;
-		setDutyCycle(preset->dutyCycle);
+		setDutyCycle(preset->dutyCycle += DUTY_CYLCE_STEP);
 		printDutySel();
 		break;
 	case IDLE:
@@ -105,9 +101,9 @@ void Timer::right()
 
 void Timer::setFrequencyAndDC(uint16_t frequency)
 {
-	preset->frequency = min(FREQUENCY_MAX, frequency);
-	preset->frequency = max(FREQUENCY_MIN, frequency);
-
+	frequency = min(FREQUENCY_MAX, frequency);
+	frequency = max(FREQUENCY_MIN, frequency);
+	preset->frequency = frequency;
 
 	htim->Init.Period = (BASE_CLK / (PRESCALER * preset->frequency)) - 1;
 	setDutyCycle(preset->dutyCycle);
@@ -120,8 +116,9 @@ void Timer::setFrequencyAndDC(uint16_t frequency)
 
 void Timer::setDutyCycle(uint8_t dutyCycle)
 {
-	preset->dutyCycle = min(DUTY_CYCLE_MAX, dutyCycle);
-	preset->dutyCycle = max(DUTY_CYCLE_MIN, dutyCycle);
+	dutyCycle = min(DUTY_CYCLE_MAX, dutyCycle);
+	dutyCycle = max(DUTY_CYCLE_MIN, dutyCycle);
+	preset->dutyCycle = dutyCycle;
 
 	htim->Instance->CCR1 = (htim->Init.Period * (preset->dutyCycle / 100.0f));
 }
